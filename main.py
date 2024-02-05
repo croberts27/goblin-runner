@@ -12,12 +12,17 @@ pygame.display.set_caption("Goblin Runner")
 # create clock object to help control frame rate
 clock = pygame.time.Clock()
 # init font
-test_font = pygame.font.Font('fonts/zeropixel-eye-fs.ttf', 50)
+goblin_font = pygame.font.Font('fonts/zeropixel-eye-fs.ttf', 50)
 
 # init surfaces
 hills_surface = pygame.image.load('images/hills.JPG')
 ground_surface = pygame.image.load('images/ground.JPG')
-text_surface = test_font.render('Goblin Runner', False, 'black')
+text_surface = goblin_font.render('Goblin Runner', False, 'black')
+snail_surface = pygame.image.load('images/enemy/snail1.png')
+
+# init surface positions
+snail_x_pos = 600
+snail_y_pos = 320
 
 while True:
     for event in pygame.event.get():
@@ -29,6 +34,11 @@ while True:
     screen.blit(hills_surface, (0, 0))
     screen.blit(ground_surface, (0, 320))
     screen.blit(text_surface, (70, 25))
+    snail_x_pos -= 3
+    if snail_x_pos < -100:
+        snail_x_pos = 600
+
+    screen.blit(snail_surface,(snail_x_pos, snail_y_pos))
 
     # update everything to keep display open
     pygame.display.update()
