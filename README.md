@@ -2,7 +2,7 @@
 
 ## Description
 
-Goblin Runner is a 2D platformer game built using Pygame in Python. 
+Goblin Runner is a 2D side scrolling platformer game built using Pygame in Python. 
 
 ## License
 
