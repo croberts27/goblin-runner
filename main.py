@@ -49,7 +49,10 @@ while True:
 
     snail_rect.x -= 4
     if snail_rect.right <= 0:
-        snail_rect.left=800
+        snail_rect.left = 800
+
+    if player_rect.colliderect(snail_rect):
+        exit()
 
     # update everything to keep display open
     pygame.display.update()
