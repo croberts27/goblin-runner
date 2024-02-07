@@ -23,15 +23,14 @@ goblin_font = pygame.font.Font('fonts/zeropixel-eye-fs.ttf', 50)
 # init surfs
 hills_surf = pygame.image.load('images/hills.JPG').convert_alpha()
 ground_surf = pygame.image.load('images/ground.JPG').convert_alpha()
-text_surf = goblin_font.render('Goblin Runner', False, 'black')
+
+score_surf = goblin_font.render('Score: ', False, 'black')
+score_rect = score_surf.get_rect(center=(125, 25))
+
 player_surf = pygame.image.load('images/player/player_walk_1.png').convert_alpha()
-player2_surf = pygame.image.load('images/player/player_walk_1.png').convert_alpha()
-snail_surf = pygame.image.load('images/enemy/snail1.png').convert_alpha()
-
-
-# rectangles
 player_rect = player_surf.get_rect(midbottom=(70, 345))
-player2_rect = player2_surf.get_rect(bottomright=(70, 345))
+
+snail_surf = pygame.image.load('images/enemy/snail1.png').convert_alpha()
 snail_rect = snail_surf.get_rect(bottomright=(800, 345))
 
 
@@ -56,14 +55,15 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
+        # if event.type == pygame.MOUSEMOTION:
+        #     print(event.pos)
     # fill screen with color to wipe anything away from last frame
     screen.fill("purple")
     screen.blit(hills_surf, (0, 0))
     screen.blit(ground_surf, (0, 320))
-    screen.blit(text_surf, (70, 25))
+    screen.blit(score_surf, score_rect)
     screen.blit(player_surf, player_rect)
     screen.blit(snail_surf, snail_rect)
-    screen.blit(player2_surf, player2_rect)
 
     snail_rect.x -= 4
     if snail_rect.right <= 0:
@@ -71,12 +71,12 @@ while True:
 
     # if player_rect.colliderect(snail_rect):
     #     exit()
-    #
-    mouse_pos = pygame.mouse.get_pos()
-    if player_rect.collidepoint(mouse_pos):
-        print(pygame.mouse.get_pressed())
+
+    # mouse_pos = pygame.mouse.get_pos()
+    # if player_rect.collidepoint(mouse_pos):
+    #     print(pygame.mouse.get_pressed())
 
     # update everything to keep display open
     pygame.display.update()
     # set frame rate ceiling
-    clock.tick(30)
+    clock.tick(60)
