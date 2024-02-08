@@ -3,7 +3,10 @@
 ## Description
 
 Snail Runner i
-s a 2D side scrolling platformer game built using Pygame in Python. 
+s a 2D side scrolling platformer game built using Pygame in Python.
+
+## Install
+Clone this repo and make sure you have Python 3 installed, pygame, and a Python IDE (I use Pycharm)
 
 ## Credits
 

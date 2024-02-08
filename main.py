@@ -24,7 +24,7 @@ game_active = True
 game_over_surf = goblin_font.render('GAME OVER!', False, 'Red')
 game_over_rect = game_over_surf.get_rect(center=(300, 100))
 restart_surf = goblin_font.render("'R' TO RESTART", False, 'Red')
-restart_rect = game_over_surf.get_rect(center=(232, 200))
+restart_rect = game_over_surf.get_rect(center=(240, 200))
 
 # init surfs and rects
 hills_surf = pygame.image.load('images/hills.JPG').convert_alpha()
