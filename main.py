@@ -20,6 +20,10 @@ clock = pygame.time.Clock()
 # init font
 goblin_font = pygame.font.Font('fonts/zeropixel-eye-fs.ttf', 50)
 
+game_active = True
+game_over_surf = goblin_font.render('GAME OVER!', False, 'Red')
+game_over_rect = game_over_surf.get_rect(center=(300, 100))
+
 # init surfs and rects
 hills_surf = pygame.image.load('images/hills.JPG').convert_alpha()
 ground_surf = pygame.image.load('images/ground.JPG').convert_alpha()
@@ -30,22 +34,27 @@ score_rect = score_surf.get_rect(center=(300, 45))
 player_surf = pygame.image.load('images/player/player_walk_1.png').convert_alpha()
 player_rect = player_surf.get_rect(midbottom=(70, 345))
 player_gravity = 0
+player_pos = 0
 
 snail_surf = pygame.image.load('images/enemy/snail1.png').convert_alpha()
 snail_rect = snail_surf.get_rect(bottomright=(800, 345))
-
 
 # CLASSES
 
 
 # init surf positions
 snail_y_pos = 320
+
 # WHILE LOOP
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
+
+        if event.type == pygame.KEYDOWN:
+            if event.type == pygame.K_RIGHT:
+                player_pos = 1
 
         if event.type == pygame.MOUSEBUTTONDOWN and player_rect.bottom >= 345:
             if player_rect.collidepoint(event.pos):
@@ -56,29 +65,36 @@ while True:
                 player_gravity = -20
 
     # fill screen with color to wipe anything away from last frame
-    screen.fill("purple")
-    screen.blit(hills_surf, (0, 0))
-    screen.blit(ground_surf, (0, 320))
-    pygame.draw.rect(screen, '#c0e8ec', score_rect, 10)
-    pygame.draw.rect(screen, '#c0e8ec', score_rect)
-    screen.blit(score_surf, score_rect)
-    screen.blit(snail_surf, snail_rect)
+    if game_active:
+        screen.fill("purple")
+        screen.blit(hills_surf, (0, 0))
+        screen.blit(ground_surf, (0, 320))
+        pygame.draw.rect(screen, '#c0e8ec', score_rect, 10)
+        pygame.draw.rect(screen, '#c0e8ec', score_rect)
+        screen.blit(score_surf, score_rect)
+        screen.blit(snail_surf, snail_rect)
 
-    snail_rect.x -= 4
-    if snail_rect.right <= 0:
-        snail_rect.right = 800
+        snail_rect.x -= 4
+        if snail_rect.right <= 0:
+            snail_rect.right = 800
 
-    # PLAYER
-    player_gravity += 1
-    player_rect.y += player_gravity
-    if player_rect.bottom >= 345:
-        player_rect.bottom = 345
-    screen.blit(player_surf, player_rect)
+        # PLAYER
+        player_gravity += 1
+        player_rect.y += player_gravity
+        player_pos += 1
+        player_rect.x += player_pos
+        if player_rect.bottom >= 345:
+            player_rect.bottom = 345
+        screen.blit(player_surf, player_rect)
 
-    # GAME OVER
-    if snail_rect.colliderect(player_rect):
-        pygame.quit()
-        exit()
+        # GAME OVER
+        if snail_rect.colliderect(player_rect):
+            game_active = False
+    else:
+        screen.fill('Yellow')
+
+    if game_active is False:
+        screen.blit(game_over_surf, game_over_rect)
 
     # update everything to keep display open
     pygame.display.update()
