@@ -27,10 +27,16 @@ goblin_font = pygame.font.Font('fonts/zeropixel-eye-fs.ttf', 50)
 
 game_active = False
 start_time = 0
-game_over_surf = goblin_font.render('GAME OVER!', False, (210, 4, 45))
-game_over_rect = game_over_surf.get_rect(center=(300, 50))
+game_over_surf = goblin_font.render('Snail Runner', False, (210, 4, 45))
+game_over_rect = game_over_surf.get_rect(center=(300, 25))
 restart_surf = goblin_font.render("'R' TO RESTART", False, (210, 4, 45))
-restart_rect = game_over_surf.get_rect(center=(240, 150))
+restart_rect = game_over_surf.get_rect(center=(265, 150))
+game_instructions = goblin_font.render('Space to jump', False, (210, 4, 45))
+game_instructions_rect = game_instructions.get_rect(center=(295, 85))
+
+# game_start_surf = goblin_font.render('Snail Runner', False, (210, 4, 45))
+# game_start_rect = game_start_surf.get_rect(center=(300, 50))
+
 
 # init surfs and rects
 hills_surf = pygame.image.load('images/hills.JPG').convert_alpha()
@@ -45,7 +51,7 @@ player_gravity = 0
 
 player_stand = pygame.image.load('images/player/player_stand.png').convert_alpha()
 player_stand = pygame.transform.rotozoom(player_stand, 0, 2)
-player_stand_rect = player_stand.get_rect(center=(280, 300))
+player_stand_rect = player_stand.get_rect(center=(285, 300))
 
 snail_surf = pygame.image.load('images/enemy/snail1.png').convert_alpha()
 snail_rect = snail_surf.get_rect(bottomright=(800, 345))
@@ -103,6 +109,7 @@ while True:
         screen.blit(game_over_surf, game_over_rect)
         screen.blit(restart_surf, restart_rect)
         screen.blit(player_stand, player_stand_rect)
+        screen.blit(game_instructions, game_instructions_rect)
 
     # update everything to keep display open
     pygame.display.update()
