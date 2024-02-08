@@ -16,7 +16,7 @@ Images downloaded from [opengameart.org](opengameart.org) & [clear-code-projects
 
 ## GIF
 
-![snailrunner.gif](..%2F..%2FDownloads%2Fsnailrunner.gif)
+![snailrunner.gif](/images/snailrunner.gif)
 
 ## License
 
