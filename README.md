@@ -2,7 +2,8 @@
 
 ## Description
 
-Snail Runner is a 2D side scrolling platformer game built using Pygame in Python. 
+Snail Runner i
+s a 2D side scrolling platformer game built using Pygame in Python. 
 
 ## Credits
 
@@ -12,6 +13,10 @@ Images downloaded from [opengameart.org](opengameart.org) & [clear-code-projects
 ### Walkthrough
 
 - [The ultimate introduction to Pygame](https://www.youtube.com/watch?v=AY9MnQ4x3zk)
+
+## GIF
+
+![snailrunner.gif](..%2F..%2FDownloads%2Fsnailrunner.gif)
 
 ## License
 
