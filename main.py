@@ -23,20 +23,17 @@ pygame.display.set_caption("Snail Runner")
 # create clock object to help control frame rate
 clock = pygame.time.Clock()
 # init font
-goblin_font = pygame.font.Font('fonts/zeropixel-eye-fs.ttf', 50)
+goblin_font = pygame.font.Font('fonts/zeropixel-eye-fs.ttf', 40)
 
 game_active = False
 start_time = 0
 game_over_surf = goblin_font.render('Snail Runner', False, (210, 4, 45))
 game_over_rect = game_over_surf.get_rect(center=(300, 25))
-restart_surf = goblin_font.render("'R' TO RESTART", False, (210, 4, 45))
-restart_rect = game_over_surf.get_rect(center=(265, 150))
-game_instructions = goblin_font.render('Space to jump', False, (210, 4, 45))
+game_instructions = goblin_font.render("Press 'space' to run", False, (210, 4, 45))
 game_instructions_rect = game_instructions.get_rect(center=(295, 85))
 
 # game_start_surf = goblin_font.render('Snail Runner', False, (210, 4, 45))
 # game_start_rect = game_start_surf.get_rect(center=(300, 50))
-
 
 # init surfs and rects
 hills_surf = pygame.image.load('images/hills.JPG').convert_alpha()
@@ -77,7 +74,7 @@ while True:
                 if event.key == pygame.K_SPACE:
                     player_gravity = -20
         if not game_active and event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_r:
+            if event.key == pygame.K_SPACE:
                 game_active = True
                 snail_rect.left = 800
                 start_time = int(pygame.time.get_ticks() / 1000)
@@ -107,7 +104,6 @@ while True:
     else:  # Game over state
         screen.fill((94, 129, 162))
         screen.blit(game_over_surf, game_over_rect)
-        screen.blit(restart_surf, restart_rect)
         screen.blit(player_stand, player_stand_rect)
         screen.blit(game_instructions, game_instructions_rect)
 
