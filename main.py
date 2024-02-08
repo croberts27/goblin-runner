@@ -8,6 +8,7 @@ def display_score():
     score_surf = goblin_font.render(f'Score: {current_time}', False, (64, 64, 64))
     score_rect = score_surf.get_rect(center=(300, 45))
     screen.blit(score_surf, score_rect)
+    return current_time
 
 
 # init pygame
@@ -31,7 +32,7 @@ game_over_surf = goblin_font.render('Snail Runner', False, (210, 4, 45))
 game_over_rect = game_over_surf.get_rect(center=(300, 25))
 game_instructions = goblin_font.render("Press 'space' to run", False, (210, 4, 45))
 game_instructions_rect = game_instructions.get_rect(center=(295, 85))
-
+score = display_score()
 # game_start_surf = goblin_font.render('Snail Runner', False, (210, 4, 45))
 # game_start_rect = game_start_surf.get_rect(center=(300, 50))
 
@@ -84,7 +85,7 @@ while True:
         screen.blit(hills_surf, (0, 0))
         screen.blit(ground_surf, (0, 320))
         screen.blit(snail_surf, snail_rect)
-        display_score()
+        score = display_score()
 
         snail_rect.x -= 4
         if snail_rect.right <= 0:
@@ -106,6 +107,13 @@ while True:
         screen.blit(game_over_surf, game_over_rect)
         screen.blit(player_stand, player_stand_rect)
         screen.blit(game_instructions, game_instructions_rect)
+        score_message = goblin_font.render(f'Your score: {score}', False, (210, 4, 45))
+        score_message_rect = score_message.get_rect(center=(285, 150))
+
+        if score == 0:
+            screen.blit(game_instructions, game_instructions_rect)
+        else:
+            screen.blit(score_message, score_message_rect)
 
     # update everything to keep display open
     pygame.display.update()
