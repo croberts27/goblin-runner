@@ -1,8 +1,12 @@
 # import pygame
 import pygame
+from random import randint
 from sys import exit
 
-
+def obstacle_movement(obstacle_list):
+    if obstacle_list:
+        for rect in obstacle_list:
+            obstacle_rect.x -=
 def display_score():
     current_time = int(pygame.time.get_ticks() / 1000) - start_time
     score_surf = goblin_font.render(f'Score: {current_time}', False, (64, 64, 64))
@@ -51,14 +55,17 @@ player_stand = pygame.image.load('images/player/player_stand.png').convert_alpha
 player_stand = pygame.transform.rotozoom(player_stand, 0, 2)
 player_stand_rect = player_stand.get_rect(center=(285, 300))
 
+# OBSTACLES
 snail_surf = pygame.image.load('images/enemy/snail1.png').convert_alpha()
 snail_rect = snail_surf.get_rect(bottomright=(800, 345))
 
+obstacle_rect_list = []
+
 # CLASSES
 
-
-# init surf positions
-snail_y_pos = 320
+# TIMER
+obstacle_timer = pygame.USEREVENT + 1
+pygame.time.set_timer(obstacle_timer, 900)
 
 # WHILE LOOP
 while True:
@@ -79,6 +86,8 @@ while True:
                 game_active = True
                 snail_rect.left = 800
                 start_time = int(pygame.time.get_ticks() / 1000)
+        if event.type == obstacle_timer and game_active:
+            obstacle_rect_list.append(snail_surf.get_rect(bottomright=(randint(800, 1000), 345)))
 
     if game_active:
         screen.fill("purple")
@@ -87,9 +96,9 @@ while True:
         screen.blit(snail_surf, snail_rect)
         score = display_score()
 
-        snail_rect.x -= 4
-        if snail_rect.right <= 0:
-            snail_rect.right = 800
+        # snail_rect.x -= 4
+        # if snail_rect.right <= 0:
+        #     snail_rect.right = 800
 
         # PLAYER
         player_gravity += 1
@@ -97,6 +106,9 @@ while True:
         if player_rect.bottom >= 345:
             player_rect.bottom = 345
         screen.blit(player_surf, player_rect)
+
+        # OBSTACLE MOVEMENT
+        obstacle_movement(obstacle_rect_list)
 
         # Collision detection
         if player_rect.colliderect(snail_rect):  # Check collision with snail_rect
