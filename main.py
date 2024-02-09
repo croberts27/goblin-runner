@@ -35,6 +35,20 @@ def collision(player, obstacles):
     return True
 
 
+def player_animation():
+    global player_surf, player_index
+
+    if player_rect.bottom < 345:
+        player_surf = player_jump
+    else:
+        player_index += 0.1
+        if player_index >= len(player_walk):
+            player_index = 0
+        player_surf = player_walk[int(player_index)]
+    # player walking animation if player is on the floor
+    # display jump surface when player is not on floor
+
+
 # init pygame
 pygame.init()
 
@@ -67,7 +81,13 @@ ground_surf = pygame.image.load('images/ground.JPG').convert_alpha()
 # score_surf = goblin_font.render('Snail Runner', False, (64, 64, 64))
 # score_rect = score_surf.get_rect(center=(300, 45))
 
-player_surf = pygame.image.load('images/player/player_walk_1.png').convert_alpha()
+player_walk_1 = pygame.image.load('images/player/player_walk_1.png').convert_alpha()
+player_walk_2 = pygame.image.load('images/player/player_walk_2.png').convert_alpha()
+player_walk = [player_walk_1, player_walk_2]
+player_jump = pygame.image.load('images/player/jump.png').convert_alpha()
+player_index = 0
+
+player_surf = player_walk[player_index]
 player_rect = player_surf.get_rect(midbottom=(70, 345))
 player_gravity = 0
 
@@ -126,6 +146,7 @@ while True:
         player_rect.y += player_gravity
         if player_rect.bottom >= 345:
             player_rect.bottom = 345
+        player_animation()
         screen.blit(player_surf, player_rect)
 
         # OBSTACLE MOVEMENT
@@ -138,6 +159,8 @@ while True:
         screen.fill((94, 129, 162))
         obstacle_rect_list.clear()
         player_rect.bottom = 345
+        player_gravity = 0
+
         screen.blit(game_over_surf, game_over_rect)
         screen.blit(player_stand, player_stand_rect)
         screen.blit(game_instructions, game_instructions_rect)
