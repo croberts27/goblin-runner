@@ -27,6 +27,14 @@ def display_score():
     return current_time
 
 
+def collision(player, obstacles):
+    if obstacles:
+        for obstacle_rect in obstacles:
+            if player.colliderect(obstacle_rect):
+                return False
+    return True
+
+
 # init pygame
 pygame.init()
 
@@ -123,8 +131,13 @@ while True:
         # OBSTACLE MOVEMENT
         obstacle_rect_list = obstacle_movement(obstacle_rect_list)
 
+        # COLLISIONS
+        game_active = collision(player_rect, obstacle_rect_list)
+
     else:  # Game over state
         screen.fill((94, 129, 162))
+        obstacle_rect_list.clear()
+        player_rect.bottom = 345
         screen.blit(game_over_surf, game_over_rect)
         screen.blit(player_stand, player_stand_rect)
         screen.blit(game_instructions, game_instructions_rect)
