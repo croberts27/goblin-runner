@@ -74,9 +74,9 @@ goblin_font = pygame.font.Font('fonts/zeropixel-eye-fs.ttf', 40)
 
 game_active = False
 start_time = 0
-game_over_surf = goblin_font.render('Snail Runner', False, (210, 4, 45))
+game_over_surf = goblin_font.render('Snail Runner', False, "yellow")
 game_over_rect = game_over_surf.get_rect(center=(300, 25))
-game_instructions = goblin_font.render("Press 'space' to run", False, (210, 4, 45))
+game_instructions = goblin_font.render("Press 'space' to run", False, "yellow")
 game_instructions_rect = game_instructions.get_rect(center=(295, 85))
 score = display_score()
 
@@ -201,7 +201,7 @@ while True:
         screen.blit(game_over_surf, game_over_rect)
         screen.blit(player_stand, player_stand_rect)
         screen.blit(game_instructions, game_instructions_rect)
-        score_message = goblin_font.render(f'Your score: {score}', False, (210, 4, 45))
+        score_message = goblin_font.render(f'Your score: {score}', False, "yellow")
         score_message_rect = score_message.get_rect(center=(285, 150))
 
         if score == 0:
