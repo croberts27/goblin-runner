@@ -3,10 +3,22 @@ import pygame
 from random import randint
 from sys import exit
 
+
 def obstacle_movement(obstacle_list):
     if obstacle_list:
-        for rect in obstacle_list:
-            obstacle_rect.x -=
+        for obstacle_rect in obstacle_list:
+            obstacle_rect.x -= 5
+
+            if obstacle_rect.bottom == 345:
+                screen.blit(snail_surf, obstacle_rect)
+            else:
+                screen.blit(fly_surf, obstacle_rect)
+        obstacle_list = [obstacle for obstacle in obstacle_list if obstacle.x > -100]
+        return obstacle_list
+    else:
+        return []
+
+
 def display_score():
     current_time = int(pygame.time.get_ticks() / 1000) - start_time
     score_surf = goblin_font.render(f'Score: {current_time}', False, (64, 64, 64))
@@ -57,7 +69,7 @@ player_stand_rect = player_stand.get_rect(center=(285, 300))
 
 # OBSTACLES
 snail_surf = pygame.image.load('images/enemy/snail1.png').convert_alpha()
-snail_rect = snail_surf.get_rect(bottomright=(800, 345))
+fly_surf = pygame.image.load('images/fly/Fly1.png').convert_alpha()
 
 obstacle_rect_list = []
 
@@ -65,7 +77,7 @@ obstacle_rect_list = []
 
 # TIMER
 obstacle_timer = pygame.USEREVENT + 1
-pygame.time.set_timer(obstacle_timer, 900)
+pygame.time.set_timer(obstacle_timer, 1500)
 
 # WHILE LOOP
 while True:
@@ -84,16 +96,17 @@ while True:
         if not game_active and event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 game_active = True
-                snail_rect.left = 800
                 start_time = int(pygame.time.get_ticks() / 1000)
         if event.type == obstacle_timer and game_active:
-            obstacle_rect_list.append(snail_surf.get_rect(bottomright=(randint(800, 1000), 345)))
+            if randint(0, 2):
+                obstacle_rect_list.append(snail_surf.get_rect(bottomright=(randint(800, 1000), 345)))
+            else:
+                obstacle_rect_list.append(fly_surf.get_rect(bottomright=(randint(800, 1000), 220)))
 
     if game_active:
         screen.fill("purple")
         screen.blit(hills_surf, (0, 0))
         screen.blit(ground_surf, (0, 320))
-        screen.blit(snail_surf, snail_rect)
         score = display_score()
 
         # snail_rect.x -= 4
@@ -108,11 +121,7 @@ while True:
         screen.blit(player_surf, player_rect)
 
         # OBSTACLE MOVEMENT
-        obstacle_movement(obstacle_rect_list)
-
-        # Collision detection
-        if player_rect.colliderect(snail_rect):  # Check collision with snail_rect
-            game_active = False
+        obstacle_rect_list = obstacle_movement(obstacle_rect_list)
 
     else:  # Game over state
         screen.fill((94, 129, 162))
