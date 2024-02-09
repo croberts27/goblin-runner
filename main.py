@@ -96,16 +96,34 @@ player_stand = pygame.transform.rotozoom(player_stand, 0, 2)
 player_stand_rect = player_stand.get_rect(center=(285, 300))
 
 # OBSTACLES
-snail_surf = pygame.image.load('images/enemy/snail1.png').convert_alpha()
-fly_surf = pygame.image.load('images/fly/Fly1.png').convert_alpha()
+
+# snail
+snail_frame_1 = pygame.image.load('images/enemy/snail1.png').convert_alpha()
+snail_frame_2 = pygame.image.load('images/enemy/snail2.png').convert_alpha()
+snail_frames = [snail_frame_1, snail_frame_2]
+snail_index = 0
+snail_surf = snail_frames[snail_index]
+
+# fly
+fly_frame_1 = pygame.image.load('images/fly/Fly1.png').convert_alpha()
+fly_frame_2 = pygame.image.load('images/fly/Fly2.png').convert_alpha()
+fly_frames = [fly_frame_1, fly_frame_2]
+fly_index = 0
+fly_surf = fly_frames[fly_index]
 
 obstacle_rect_list = []
 
 # CLASSES
 
-# TIMER
+# TIMERS
 obstacle_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(obstacle_timer, 1500)
+
+snail_animation_timer = pygame.USEREVENT + 2
+pygame.time.set_timer(snail_animation_timer,500)
+
+fly_animation_timer = pygame.USEREVENT + 3
+pygame.time.set_timer(fly_animation_timer,200)
 
 # WHILE LOOP
 while True:
@@ -125,11 +143,24 @@ while True:
             if event.key == pygame.K_SPACE:
                 game_active = True
                 start_time = int(pygame.time.get_ticks() / 1000)
-        if event.type == obstacle_timer and game_active:
-            if randint(0, 2):
-                obstacle_rect_list.append(snail_surf.get_rect(bottomright=(randint(800, 1000), 345)))
-            else:
-                obstacle_rect_list.append(fly_surf.get_rect(bottomright=(randint(800, 1000), 220)))
+        if game_active:
+            if event.type == obstacle_timer:
+                if randint(0, 2):
+                    obstacle_rect_list.append(snail_surf.get_rect(bottomright=(randint(800, 1000), 345)))
+                else:
+                    obstacle_rect_list.append(fly_surf.get_rect(bottomright=(randint(800, 1000), 220)))
+            if event.type == snail_animation_timer:
+                if snail_index == 0:
+                    snail_index = 1
+                else:
+                    snail_index = 0
+                snail_surf = snail_frames[snail_index]
+            if event.type == fly_animation_timer:
+                if fly_index == 0:
+                    fly_index = 1
+                else:
+                    fly_index = 0
+                fly_surf = fly_frames[fly_index]
 
     if game_active:
         screen.fill("purple")
