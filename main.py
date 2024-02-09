@@ -4,6 +4,14 @@ from random import randint
 from sys import exit
 
 
+# CLASSES
+class Player(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.image.load('images/player/player_walk_1.png').convert_alpha()
+        self.rect = self.image.get_rect(midbottom=(200, 300))
+
+
 def obstacle_movement(obstacle_list):
     if obstacle_list:
         for obstacle_rect in obstacle_list:
@@ -71,8 +79,8 @@ game_over_rect = game_over_surf.get_rect(center=(300, 25))
 game_instructions = goblin_font.render("Press 'space' to run", False, (210, 4, 45))
 game_instructions_rect = game_instructions.get_rect(center=(295, 85))
 score = display_score()
-# game_start_surf = goblin_font.render('Snail Runner', False, (210, 4, 45))
-# game_start_rect = game_start_surf.get_rect(center=(300, 50))
+
+player = Player()
 
 # init surfs and rects
 hills_surf = pygame.image.load('images/hills.JPG').convert_alpha()
@@ -113,17 +121,15 @@ fly_surf = fly_frames[fly_index]
 
 obstacle_rect_list = []
 
-# CLASSES
-
 # TIMERS
 obstacle_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(obstacle_timer, 1500)
 
 snail_animation_timer = pygame.USEREVENT + 2
-pygame.time.set_timer(snail_animation_timer,500)
+pygame.time.set_timer(snail_animation_timer, 500)
 
 fly_animation_timer = pygame.USEREVENT + 3
-pygame.time.set_timer(fly_animation_timer,200)
+pygame.time.set_timer(fly_animation_timer, 200)
 
 # WHILE LOOP
 while True:
